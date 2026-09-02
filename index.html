@@ -108,6 +108,60 @@
             outline: none;
         }
 
+        /* تنسيقات حقول النسخ والروابط */
+        .copy-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+            direction: ltr;
+        }
+
+        .copy-input {
+            flex: 1;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            color: #26ff1e;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: monospace;
+            outline: none;
+        }
+
+        .copy-btn {
+            background-color: #252525;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background-color: #1e88e5;
+            border-color: #1e88e5;
+        }
+
+        .text-area-box {
+            width: 100%;
+            height: 110px;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            color: #26ff1e;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: none;
+            outline: none;
+            margin-top: 10px;
+            direction: ltr;
+        }
+
         /* الأزرار الرئيسية */
         .btn {
             display: block;
@@ -225,6 +279,11 @@
                 متصفحك لا يدعم تشغيل هذا الفيديو.
             </video>
         </div>
+        <!-- رابط موقع قوقل سكيلز قابل للنسخ -->
+        <div class="copy-box">
+            <input type="text" id="link1" class="copy-input" value="https://www.skills.google" readonly>
+            <button class="copy-btn" onclick="copyText('link1', this)">نسخ الرابط</button>
+        </div>
     </div>
 
     <!-- الجزء الثاني -->
@@ -237,6 +296,20 @@
                 متصفحك لا يدعم تشغيل هذا الفيديو.
             </video>
         </div>
+        
+        <!-- رابط لاب سيرفر أمريكي -->
+        <p style="color:#aaa; font-size:0.85rem; margin-top:12px;">🔗 رابط لاب سيرفر أمريكي:</p>
+        <div class="copy-box">
+            <input type="text" id="link2" class="copy-input" value="https://www.skills.google/focuses/33567?parent=catalog" readonly>
+            <button class="copy-btn" onclick="copyText('link2', this)">نسخ الرابط</button>
+        </div>
+
+        <!-- رابط لاب سيرفر بلجيكي -->
+        <p style="color:#aaa; font-size:0.85rem; margin-top:12px;">🔗 رابط لاب سيرفر بلجيكي:</p>
+        <div class="copy-box">
+            <input type="text" id="link3" class="copy-input" value="https://www.skills.google/focuses/19372?parent=catalog" readonly>
+            <button class="copy-btn" onclick="copyText('link3', this)">نسخ الرابط</button>
+        </div>
     </div>
 
     <!-- الجزء الثالث -->
@@ -248,6 +321,16 @@
                 <source src="part3.mp4" type="video/mp4">
                 متصفحك لا يدعم تشغيل هذا الفيديو.
             </video>
+        </div>
+
+        <!-- معلومات الحاوية -->
+        <p style="color:#aaa; font-size:0.85rem; margin-top:12px;">📋 معلومات الحاوية:</p>
+        <textarea id="containerInfo" class="text-area-box" readonly>target server:google.com:443
+uuid:0b2e3353-86eb-4d04-ba27-332506b023c5
+path:/DZCONFI/L1tche
+sni:youtube.com</textarea>
+        <div style="margin-top: 8px;">
+            <button class="copy-btn" style="width:100%;" onclick="copyText('containerInfo', this)">نسخ معلومات الحاوية</button>
         </div>
     </div>
 
@@ -277,6 +360,21 @@
 
 <script>
     const GITHUB_JSON_URL = "https://raw.githubusercontent.com/Litche588/NetChecker/main/channels.json";
+
+    function copyText(elementId, btnElement) {
+        const element = document.getElementById(elementId);
+        element.select();
+        element.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(element.value).then(() => {
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "تم النسخ! ✓";
+            btnElement.style.backgroundColor = "#2e7d32";
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.style.backgroundColor = "";
+            }, 2000);
+        });
+    }
 
     function toggleChannels() {
         const modal = document.getElementById("channelsModal");
